@@ -45,11 +45,11 @@ var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-moti
   var track = document.getElementById('tickerTrack');
   if(!track) return;
   var items = window.TICKER_ITEMS || [
-    'Nisarg\u2019s Newsletter — issue 01 in draft',
-    'The B2B IRL Room — opening soon',
-    'Homecoming — Mumbai, 28 October',
-    'B2B IRL: Mumbai — next meetup TBA',
-    'The Almanack — first print run coming'
+    'Nisarg\u2019s Newsletter · issue 01 in draft',
+    'The B2B IRL Room · opening soon',
+    'Homecoming · Toronto, 28 October',
+    'B2B IRL: Toronto · next meetup TBA',
+    'The Almanack · first print run coming'
   ];
   var html = '';
   for(var pass = 0; pass < 2; pass++){
