@@ -315,3 +315,64 @@ footer{ border-top: 1px solid var(--line); padding-block: clamp(2.5rem, 2rem + 2
   .footer-grid{ grid-template-columns: 1fr; gap: 2rem; }
   .promo-strip .wrap, .cta-band .wrap{ flex-direction: column; align-items: flex-start; }
 }
+
+/* ---------- announcement bar: first event is live ---------- */
+.announce{ display: block; background: var(--highlight); color: #1B1208; text-decoration: none; position: relative; z-index: 21; border-bottom: 1px solid rgba(27,18,8,0.18); }
+.announce .wrap{ display: flex; align-items: center; justify-content: center; gap: 0.55rem 0.9rem; flex-wrap: wrap; padding-block: 0.55rem; font-family: var(--font-mono); font-size: var(--fs-000); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; }
+.announce .live{ display: inline-flex; align-items: center; gap: 0.45em; background: #1B1208; color: var(--highlight); padding: 0.25em 0.6em; border-radius: 999px; }
+.announce .live::before{ content: ""; width: 7px; height: 7px; border-radius: 50%; background: #FF6B45; animation: live-pulse 1.6s ease-in-out infinite; }
+@keyframes live-pulse{ 0%,100%{ opacity: 1; transform: scale(1); } 50%{ opacity: 0.35; transform: scale(0.75); } }
+.announce strong{ font-weight: 600; }
+.announce .sep{ opacity: 0.45; }
+.announce .go{ border-bottom: 1.5px solid currentColor; }
+.announce:hover .go{ color: var(--accent); }
+@media (max-width: 600px){ .announce .hide-sm{ display: none; } }
+
+/* ---------- shared photography (kraft-toned, like prints on a desk) ---------- */
+.photo{ filter: sepia(0.28) saturate(0.82) contrast(1.06) brightness(0.97); }
+
+.strip{ overflow: hidden; padding-block: clamp(2.4rem, 2rem + 2vw, 3.4rem) clamp(2.8rem, 2.2rem + 2vw, 3.8rem); background: var(--paper-2); border-block: 1px solid var(--line); }
+.strip-track{ display: flex; gap: 1.6rem; width: max-content; animation: strip 70s linear infinite; padding-inline: 1rem; }
+.strip:hover .strip-track{ animation-play-state: paused; }
+@keyframes strip{ to{ transform: translateX(-50%); } }
+.polaroid{ background: #FBF6EA; padding: 10px 10px 0; box-shadow: 0 14px 24px -14px rgba(33,29,22,0.5); position: relative; flex-shrink: 0; width: 230px; margin: 0; transition: transform 0.3s ease; }
+:root[data-theme="dark"] .polaroid{ background: #2A2418; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .polaroid{ background: #2A2418; } }
+.polaroid img{ display: block; width: 100%; aspect-ratio: 4 / 3.3; object-fit: cover; }
+.polaroid figcaption{ font-family: var(--font-hand); font-size: 1.3rem; color: var(--ink); padding: 0.35rem 0.2rem 0.55rem; line-height: 1.1; }
+.polaroid:nth-child(odd){ transform: rotate(-2.2deg); }
+.polaroid:nth-child(even){ transform: rotate(1.8deg) translateY(10px); }
+.polaroid:nth-child(3n){ transform: rotate(-0.8deg) translateY(-6px); }
+.polaroid:hover{ transform: rotate(0) scale(1.04); z-index: 2; }
+.polaroid .tape{ top: -12px; left: 50%; margin-left: -34px; }
+@media (prefers-reduced-motion: reduce){ .strip-track{ animation: none; } }
+@media (max-width: 600px){ .polaroid{ width: 180px; } }
+
+/* photo cards */
+.portfolio{ display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1rem; }
+.pcard{ position: relative; display: block; aspect-ratio: 3 / 4.2; overflow: hidden; border-radius: 4px; color: #EFE3C6; text-decoration: none; background: #17140D; box-shadow: 0 18px 30px -20px rgba(33,29,22,0.55); }
+.pcard img{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.pcard::after{ content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,20,13,0.05) 30%, rgba(23,20,13,0.92) 100%); }
+.pcard:hover img{ transform: scale(1.06); }
+.pcard .in{ position: absolute; left: 0; right: 0; bottom: 0; padding: 1.1rem 1.1rem 1.2rem; z-index: 2; }
+.pcard .n{ font-family: var(--font-mono); font-size: var(--fs-000); letter-spacing: 0.12em; text-transform: uppercase; color: #F2BF1D; }
+.pcard h3{ font-size: var(--fs-500); margin: 0.35rem 0 0.4rem; }
+.pcard p{ font-size: var(--fs-100); opacity: 0.85; line-height: 1.4; }
+.pcard .chip{ position: absolute; top: 0.9rem; left: 0.9rem; z-index: 2; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(23,20,13,0.7); border: 1px solid rgba(239,231,214,0.3); padding: 0.3em 0.6em; border-radius: 999px; }
+@media (max-width: 980px){ .portfolio{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 600px){ .portfolio{ grid-template-columns: 1fr; } .pcard{ aspect-ratio: 4 / 3.4; } }
+
+/* homepage: first-event feature */
+.event-feature{ display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,0.95fr); gap: clamp(2rem, 1.5rem + 2vw, 4rem); align-items: center; }
+.event-feature .city{ position: relative; margin: 0; }
+.event-feature .city img{ display: block; width: 100%; aspect-ratio: 4 / 4.4; object-fit: cover; border-radius: 4px; box-shadow: 0 22px 40px -26px rgba(33,29,22,0.6); }
+.event-feature .city figcaption{ position: absolute; left: -0.8rem; bottom: 1.4rem; background: var(--paper); border: 1px solid var(--line); font-family: var(--font-mono); font-size: var(--fs-000); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5em 0.8em; transform: rotate(-3deg); box-shadow: 0 8px 16px -10px rgba(33,29,22,0.4); }
+.event-feature .city .polaroid{ position: absolute; right: -1rem; top: -1.6rem; width: clamp(130px, 14vw, 180px); transform: rotate(4deg); }
+.event-feature h2{ font-size: var(--fs-600); max-width: 14ch; margin-top: 0.7rem; }
+.event-feature h2 mark{ background: var(--highlight); color: #1B1208; padding: 0 0.1em; }
+.event-feature .copy p{ color: var(--ink-soft); margin-top: 1rem; max-width: 46ch; }
+.fact-row{ display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.4rem; }
+.fact{ font-family: var(--font-mono); font-size: var(--fs-000); letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 999px; padding: 0.45em 0.8em; background: var(--paper); }
+.fact b{ color: var(--accent); font-weight: 600; }
+.event-feature .actions{ display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.6rem; }
+@media (max-width: 920px){ .event-feature{ grid-template-columns: 1fr; } .event-feature .city .polaroid{ right: 0.4rem; } }

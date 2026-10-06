@@ -47,6 +47,7 @@ var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-moti
   var items = window.TICKER_ITEMS || [
     'Nisarg\u2019s Newsletter · issue 01 in draft',
     'The B2B IRL Room · opening soon',
+    'B2B IRL: Mumbai · 28 November · first event is live',
     'Homecoming · Toronto, 28 October',
     'B2B IRL: Toronto · next meetup TBA',
     'The Almanack · first print run coming'
@@ -115,5 +116,66 @@ var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-moti
       ticket.style.setProperty('--tilt-x', '0deg');
       ticket.style.setProperty('--tilt-y', '0deg');
     });
+  });
+})();
+
+/* countdown to B2B IRL: Mumbai, 28 Nov 2026 (IST) */
+(function(){
+  var el = document.getElementById('countdown');
+  if(!el) return;
+  var target = new Date('2026-11-28T00:00:00+05:30').getTime();
+  var cells = {};
+  ['d','h','m','s'].forEach(function(u){ cells[u] = el.querySelector('[data-unit="' + u + '"]'); });
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+  function tick(){
+    var left = Math.max(0, target - Date.now());
+    var s = Math.floor(left / 1000);
+    cells.d.textContent = Math.floor(s / 86400);
+    cells.h.textContent = pad(Math.floor(s % 86400 / 3600));
+    cells.m.textContent = pad(Math.floor(s % 3600 / 60));
+    cells.s.textContent = pad(s % 60);
+    if(left === 0) clearInterval(timer);
+  }
+  var timer = setInterval(tick, 1000);
+  tick();
+})();
+
+/* Mumbai application: no backend yet, so it opens a pre-filled email */
+(function(){
+  var form = document.getElementById('applyForm');
+  if(!form) return;
+  var note = document.getElementById('applyNote');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var bad = null;
+    Array.prototype.forEach.call(form.querySelectorAll('input, textarea'), function(f){
+      var ok = f.checkValidity();
+      f.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if(!ok && !bad) bad = f;
+    });
+    if(bad){
+      note.className = 'form-note err';
+      note.textContent = 'A few fields need a look before you send.';
+      bad.focus();
+      return;
+    }
+    var v = function(n){ return form.elements[n].value.trim(); };
+    var tracks = Array.prototype.filter.call(form.querySelectorAll('input[name="track"]'), function(c){ return c.checked; })
+      .map(function(c){ return c.value; }).join(', ') || 'No preference';
+    var body = [
+      'Name: ' + v('name'),
+      'Email: ' + v('email'),
+      'Company: ' + v('company'),
+      'Role: ' + v('role'),
+      'LinkedIn: ' + (v('linkedin') || 'n/a'),
+      'Tracks: ' + tracks,
+      '',
+      'What I would bring to the room:',
+      v('bring')
+    ].join('\n');
+    var subject = 'Application: B2B IRL Mumbai, 28 Nov (' + v('name') + ')';
+    window.location.href = 'mailto:hello@b2birl.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    note.className = 'form-note ok';
+    note.textContent = 'Your email app should open with everything filled in. Hit send to apply. Nothing opened? Email hello@b2birl.com.';
   });
 })();
